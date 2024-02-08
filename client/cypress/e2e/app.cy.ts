@@ -33,6 +33,15 @@ describe('App', () => {
         .and('be.visible');
     });
 
+    it('Should have a working navigation to "Todos"', () => {
+      page.getSidenavButton().click();
+      page.getSidenav();
+      // When we click the "Todos" option in the side navbar...
+      page.getNavLink('Todos').click();
+      // ...then the URL of the current page should change to ".../todos".
+      cy.url().should('match', /.*\/todos$/);
+    });
+
     it('Should have a working navigation to "Users"', () => {
       page.getSidenavButton().click();
       page.getSidenav();

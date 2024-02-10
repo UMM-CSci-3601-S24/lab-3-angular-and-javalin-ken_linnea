@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -16,8 +16,18 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTodos(): Observable<Todo[]> {
-
-    return this.httpClient.get<Todo[]>(this.todoUrl);
+  getTodos(filters?: {category?: string}): Observable<Todo[]> {
+// `HttpParams` is essentially just a map used to hold key-value
+    // pairs that are then encoded as "?key1=value1&key2=value2&…" in
+    // the URL when we make the call to `.get()` below.
+    let httpParams: HttpParams = new HttpParams();
+    if (filters) {
+      if(filters.category) {
+        httpParams = httpParams.set('category', filters.category)
+      }
+    }
+// Send the HTTP GET request with the given URL and parameters.
+    // That will return the desired `Observable<User[]>`
+    return this.httpClient.get<Todo[]>(this.todoUrl, {params: httpParams},);
   }
 }

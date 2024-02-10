@@ -15,6 +15,13 @@
 
           <!-- Server filters go here -->
 
+          <mat-form-field class="input-field">
+            <mat-label>Category</mat-label>
+            <input matInput data-test="todoCategoryInput" type="string" placeholder="Filter by category"
+              min="0" max="200" [(ngModel)]="todoCategory" (input)="getTodosFromServer()">
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+
         </div>
 
         <br>

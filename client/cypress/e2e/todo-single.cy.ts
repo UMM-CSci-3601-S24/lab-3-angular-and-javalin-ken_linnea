@@ -17,7 +17,7 @@ describe('Display of a single todo by ID',( ) => {
   });
 
   it('Should have the correct page title', () => {
-    page.getPageTitle().should('eq', 'Todo');
+    page.getPageTitle().should('eq', 'Todo Details');
   });
 
 });

@@ -29,6 +29,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   public todoStatus: boolean;
   public todoCategory: string;
   public todoBody: string;
+  public viewType: 'list' | 'card' = 'list';
 
   errMsg = '';
   private ngUnsubscribe = new Subject<void>();

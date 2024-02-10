@@ -20,10 +20,6 @@
         <br>
         <div class="flex-row gap-10 flex-wrap">
           <label for="viewType">View type: </label>
-          <mat-radio-group aria-label="View type" [(ngModel)]="viewType" data-test="viewTypeRadio">
-            <mat-radio-button value="card">Card</mat-radio-button>
-            <mat-radio-button value="list">List</mat-radio-button>
-          </mat-radio-group>
         </div>
 
       </mat-card-content>
@@ -32,26 +28,32 @@
 </div>
 
 <div class="flex-row">
-  @if (serverFilteredTodos) {
+  @if (todos) {
     <div class="flex-1" fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" >
       <!-- Switch between card and list view based on the viewType variable, set above in the mar-radio-group -->
       <div>
         @switch (viewType) {
           <!-- Card grid view -->
+          @case ('card') {
+            <div class="todo-cards-container flex-row gap-10 flex-wrap">
+              @for (todo of todos; track todo._id) {
 
+              }
+            </div>
+          }
           <!-- List view -->
-          @case ('list') {
+      @case('list') {
             <mat-card appearance="outlined">
               <mat-card-content>
                 <mat-nav-list class="todo-nav-list">
                   <h3 mat-subheader>Todos</h3>
-                  @for (todo of this.filteredTodos; track todo._id) {
+                  @for (todo of this.todos; track todo._id) {
                     <a mat-list-item [routerLink]="['/todos', todo._id]" class="todo-list-item">
                       @if (this.todo.avatar) {
-                        <img matListItemAvatar [src]="todo.avatar" alt="Avatar for {{ todo.owner }}">
+                        <img matListItemAvatar [src]="todo.avatar" alt="Avatar for {{ todoOwner }}">
                       }
-                      <span matListItemTitle mat-line class="todo-list-name"> {{todo.owner}} </span>
-                      <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
+                      <span matListItemTitle mat-line class="todo-list-name"> {{todoOwner}} </span>
+                      <span matListItemLine class="todo-list-role"> {{todoCategory}} </span>
                     </a>
                   }
                 </mat-nav-list>
@@ -75,6 +77,5 @@
       </mat-error>
     </div>
   }
-
-
 </div>
+

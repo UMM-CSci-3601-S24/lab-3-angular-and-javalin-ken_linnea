@@ -52,7 +52,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
    */
   getTodosFromServer() {
     this.todoService.getTodos({
-      // Filter the users by the role and age specified in the GUI
+      // Filter the users by category
       category: this.todoCategory
     }).pipe(
       takeUntil(this.ngUnsubscribe)

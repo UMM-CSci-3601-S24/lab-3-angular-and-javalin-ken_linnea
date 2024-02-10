@@ -16,7 +16,7 @@ export class MockTodoService extends TodoService {
       owner: 'Chris',
       status: true,
       body: 'UMM',
-      category: 'chris@this.that',
+      category: 'homework',
       avatar: 'https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon'
     },
     {
@@ -24,7 +24,7 @@ export class MockTodoService extends TodoService {
       owner: 'Pat',
       status: true,
       body: 'IBM',
-      category: 'editor',
+      category: 'video games',
       avatar: 'https://gravatar.com/avatar/b42a11826c3bde672bce7e06ad729d44?d=identicon'
     },
     {
@@ -32,7 +32,7 @@ export class MockTodoService extends TodoService {
       owner: 'Jamie',
       status: false,
       body: 'Frogs, Inc.',
-      category: 'viewer',
+      category: 'software design',
       avatar: 'https://gravatar.com/avatar/d4a6c71dd9470ad4cf58f78c100258bf?d=identicon'
     }
   ];
@@ -40,8 +40,10 @@ export class MockTodoService extends TodoService {
   constructor() {
     super(null);
   }
-
-  getTodos(): Observable<Todo[]> {
+// It's OK that the `_filters` argument isn't used here, so we'll disable
+  // this warning for just his function.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getTodos(_filters: { category?: string}): Observable<Todo[]> {
 
     //
     // The `of()` function converts a regular object or value into an

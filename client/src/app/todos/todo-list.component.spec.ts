@@ -19,6 +19,7 @@ import { MockTodoService } from '../../testing/todo.service.mock';
 import { Todo } from './todo';
 import { TodoListComponent } from './todo-list.component';
 import { TodoService } from './todo.service';
+import { TodoCardComponent } from './todo-card.component';
 
 
 const COMMON_IMPORTS: unknown[] = [
@@ -52,7 +53,7 @@ describe('TodoListComponent', () => {
   // can find all the necessary parts.
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [COMMON_IMPORTS, TodoListComponent],
+    imports: [COMMON_IMPORTS, TodoListComponent, TodoCardComponent],
     // providers:    [ TodoService ]  // NO! Don't provide the real service!
     // Provide a test-double instead
     // This MockerTodoService is defined in client/testing/todo.service.mock.
@@ -86,6 +87,13 @@ describe('TodoListComponent', () => {
   it('contains all the todos', () => {
     expect(todoList.todos.length).toBe(3);
   });
+
+  it('contains an owner called Chris', () => {
+    expect(todoList.todos.some((todo: Todo) => todo.owner === 'Chris')).toBe(true);
+  })
+  it('contains an owner called Pat', () => {
+    expect(todoList.todos.some((todo: Todo) => todo.owner === 'Pat')).toBe(true);
+  })
 
 });
 

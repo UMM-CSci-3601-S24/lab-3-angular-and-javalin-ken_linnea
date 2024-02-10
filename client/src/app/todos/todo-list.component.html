@@ -50,10 +50,10 @@
                   @for (todo of this.todos; track todo._id) {
                     <a mat-list-item [routerLink]="['/todos', todo._id]" class="todo-list-item">
                       @if (this.todo.avatar) {
-                        <img matListItemAvatar [src]="todo.avatar" alt="Avatar for {{ todoOwner }}">
+                        <img matListItemAvatar [src]="todo.avatar" alt="Avatar for {{ todo.owner }}">
                       }
-                      <span matListItemTitle mat-line class="todo-list-name"> {{todoOwner}} </span>
-                      <span matListItemLine class="todo-list-role"> {{todoCategory}} </span>
+                      <span matListItemTitle mat-line class="todo-list-name"> {{todo.owner}} </span>
+                      <span matListItemLine class="todo-list-role"> {{todo.category}} </span>
                     </a>
                   }
                 </mat-nav-list>

@@ -4,4 +4,5 @@ export interface Todo {
   status: boolean;
   body: string;
   category: string;
+  avatar?: string;
 }

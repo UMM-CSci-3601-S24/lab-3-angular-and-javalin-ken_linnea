@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import { Todo, TodoOwner } from './todo';
-//import { TodoService } from './todo.service';
+import { Todo } from './todo';
+import { TodoService } from './todo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { MatNavList, MatListSubheaderCssMatStyler, MatListItem, MatListItemAvatar, MatListItemTitle, MatListItemLine } from '@angular/material/list';
-//import { TodoCardComponent } from './todo-card.component';
 
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatOption } from '@angular/material/core';
@@ -18,14 +17,13 @@ import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
 @Component({
   selector: 'app-todo-list-component',
   templateUrl: 'todo-list.component.html',
-  styleUrls: [],
+  styleUrls: ['./todo-list.component.scss'],
   providers: [],
   standalone: true,
-  imports: []
+  imports: [MatCard, MatCardTitle, MatCardContent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, MatSelect, MatOption, MatRadioGroup, MatRadioButton, MatNavList, MatListSubheaderCssMatStyler, MatListItem, RouterLink, MatListItemAvatar, MatListItemTitle, MatListItemLine, MatError]
 })
 export class TodoListComponent implements OnInit, OnDestroy {
-  public serverFilteredTodos: Todo[];
-  public filteredTodos: Todo[];
+  public todos: Todo[];
 
   public todoOwner: string;
   public todoStatus: boolean;
@@ -34,7 +32,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
   errMsg = '';
   private ngUnsubscribe = new Subject<void>();
-}
+
 
   /**
    * This constructor injects both an instance of `TodoService`
@@ -52,23 +50,12 @@ export class TodoListComponent implements OnInit, OnDestroy {
    * in the GUI.
    */
   getTodosFromServer() {
-    // A todo-list-component is paying attention to todoService.getTodos()
-    // (which is an Observable<Todo[]>).
-    // (For more on Observable, see: https://reactivex.io/documentation/observable.html)
-    this.todoService.getTodos({
-      // Filter the todos by the role and age specified in the GUI
-
-      // Enter filters here
-
-      // Next time we see a change in the Observable<Todo[]>,
-      // refer to that Todo[] as returnedTodos here and do the steps in the {}
+    this.todoService.getTodos().pipe(
+      takeUntil(this.ngUnsubscribe)
+    ).subscribe({
       next: (returnedTodos) => {
-        // First, update the array of serverFilteredTodos to be the Todo[] in the observable
-        this.serverFilteredTodos = returnedTodos;
-        // Then update the filters for our client-side filtering as described in this method
-        this.updateFilter();
+        this.todos = returnedTodos;
       },
-      // If we observe an error in that Observable, put that message in a snackbar so we can learn more
       error: (err) => {
         if (err.error instanceof ErrorEvent) {
           this.errMsg = `Problem in the client – Error: ${err.error.message}`;
@@ -78,3 +65,20 @@ export class TodoListComponent implements OnInit, OnDestroy {
       },
     })
   }
+
+  /**
+ * Starts an asynchronous operation to update the users list
+ */
+  ngOnInit(): void {
+    this.getTodosFromServer();
+  }
+
+  /**
+* When this component is destroyed, we should unsubscribe to any
+* outstanding requests.
+*/
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+}

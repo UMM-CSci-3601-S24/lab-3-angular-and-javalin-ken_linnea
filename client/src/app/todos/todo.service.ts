@@ -30,4 +30,14 @@ export class TodoService {
     // That will return the desired `Observable<User[]>`
     return this.httpClient.get<Todo[]>(this.todoUrl, {params: httpParams},);
   }
+
+  /**
+   * Get the `Todo` with the specified ID.
+   *
+   * @param id the ID of the desired todo
+   * @returns an `Observable` containing the resulting todo.
+   */
+  getTodoById(id: string): Observable<Todo> {
+    return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
+  }
 }

@@ -54,7 +54,7 @@ export class TodoService {
    * @returns an array of `Users` matching the given filters
    */
 
-  filterTodos(todos: Todo[], filters: { body?: string, owner?: string, status?: boolean}): Todo[] {
+  filterTodos(todos: Todo[], filters: { body?: string, owner?: string, status?: boolean, limit?: number}): Todo[] {
 let filteredTodos = todos;
 
 if (filters.body) {
@@ -67,6 +67,9 @@ if (filters.owner) {
 }
 if (filters.status !== undefined) {
   filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
+}
+if (filters.limit) {
+  filteredTodos = filteredTodos.slice(0, filters.limit);
 }
 return filteredTodos;
   }

@@ -1,0 +1,30 @@
+.todo-cards-container {
+  width: 100%;
+  position: relative;
+}
+
+.todo-card {
+  margin-bottom: 10px;
+  position: relative;
+  background-color: rgb(232, 232, 241);
+  border: 3px inset #697cce;
+  /* adjust as needed */
+  border-radius: 20px;
+  /* adjust as needed */
+}
+
+.todo-card-owner {
+  border-radius: 5px;
+}
+
+.mat-radio-button {
+  margin: 0 12px;
+}
+
+.todo-card-body {
+  border: 1px inset #c9c7c7;
+  /* adjust as needed */
+  border-radius: 5px;
+  /* adjust as needed */
+  margin: 0 2px;
+}

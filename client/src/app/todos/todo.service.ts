@@ -54,13 +54,16 @@ export class TodoService {
    * @returns an array of `Users` matching the given filters
    */
 
-  filterTodos(todos: Todo[], filters: { body?: string}): Todo[] {
+  filterTodos(todos: Todo[], filters: { body?: string, owner?: string}): Todo[] {
 let filteredTodos = todos;
 
 if(filters.body) {
   filters.body = filters.body.toLowerCase();
   filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) !== -1);
-
+}
+if(filters.owner) {
+  filters.owner = filters.owner.toLowerCase();
+  filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
 }
 return filteredTodos;
   }

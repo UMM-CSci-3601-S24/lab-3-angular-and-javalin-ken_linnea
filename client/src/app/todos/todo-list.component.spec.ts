@@ -99,6 +99,9 @@ describe('TodoListComponent', () => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('m')).length).toBe(2);
   })
 
+  it('has two one todo with ch in its body', ()  => {
+    expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.owner.toLowerCase().includes('ch')).length).toBe(1);
+  })
 });
 
 /*

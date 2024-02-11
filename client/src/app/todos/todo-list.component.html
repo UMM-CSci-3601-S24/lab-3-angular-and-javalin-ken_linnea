@@ -72,7 +72,7 @@
       @case ('card') {
       <div class="todo-cards-container flex-row gap-10 flex-wrap">
         @for (todo of todos; track todo._id) {
-        <app-todo-card class="todo-card" [simple]="true" class="todo-card" [todo]="todo"
+        <app-todo-card class="todo-card" [simple]="true" [todo]="todo"
           fxFlex="1 1 300px"></app-todo-card>
         }
       </div>

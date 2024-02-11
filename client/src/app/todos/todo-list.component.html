@@ -9,6 +9,13 @@
 
          <!-- Angular filters go here-->
 
+         <mat-form-field class="input-field">
+          <mat-label>Body</mat-label>
+          <input matInput data-test="todoBodyInput" placeholder="Filter by body"
+            [(ngModel)]="todoBody" (input)="updateFilter()">
+          <mat-hint>Filtered on client</mat-hint>
+        </mat-form-field>
+
         </div>
 
         <div class="flex-row gap-10 flex-wrap">

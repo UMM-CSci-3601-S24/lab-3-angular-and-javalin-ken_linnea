@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Todo } from './todo'
+import { Todo, SortBy } from './todo'
 import { TodoService } from './todo.service';
 
 describe('TodoService', () => {
@@ -38,6 +38,8 @@ describe('TodoService', () => {
   // requests were made to ensure that we're making the correct requests.
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
+  let sorter: SortBy;
+  let sortedTodos: Todo[];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,6 +50,7 @@ describe('TodoService', () => {
     // Construct an instance of the service with the mock
     // HTTP client.
     todoService = new TodoService(httpClient);
+
   });
   afterEach(() => {
     // After every test, assert that there are no more pending requests.
@@ -89,6 +92,32 @@ describe('TodoService', () => {
 
         req.flush(testTodos);
     });
+  })
+})
+
+describe('testing sortTodos with different SortBy values', () => {
+  it('sorts by owner', () => {
+    sorter = 'owner'
+    sortedTodos = todoService.sortTodos(testTodos, sorter)
+    expect(sortedTodos[0].owner).toBe('Chris')
+    expect(sortedTodos[1].owner).toBe('Jamie');
+    expect(sortedTodos[2].owner).toBe('Pat');
+  })
+
+  it('sorts by category', () => {
+    sorter = 'category'
+    sortedTodos = todoService.sortTodos(testTodos, sorter)
+    expect(sortedTodos[0].category).toBe('homework')
+    expect(sortedTodos[1].category).toBe('software design');
+    expect(sortedTodos[2].category).toBe('video games');
+  })
+
+  it('sorts by body', () => {
+    sorter = 'body'
+    sortedTodos = todoService.sortTodos(testTodos, sorter)
+    expect(sortedTodos[0].body).toBe('Frogs, Inc.')
+    expect(sortedTodos[1].body).toBe('IBM');
+    expect(sortedTodos[2].body).toBe('UMM');
   })
 })
 })

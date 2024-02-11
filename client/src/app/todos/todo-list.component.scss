@@ -5,6 +5,7 @@
 
 .todo-card {
   margin-bottom: 10px;
+  width: 200px;
 }
 
 .search-card {
@@ -16,5 +17,9 @@
 }
 
 .todo-list-item {
-  color: red;
+  background-color: gray;
+  border: 1px solid #2d2c2c;
+  /* adjust as needed */
+  border-radius: 20px;
+  /* adjust as needed */
 }

@@ -40,4 +40,29 @@ export class TodoService {
   getTodoById(id: string): Observable<Todo> {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
+      /**
+   * A service method that filters an array of `User` using
+   * the specified filters.
+   *
+   * Note that the filters here support partial matches. Since the
+   * matching is done locally we can afford to repeatedly look for
+   * partial matches instead of waiting until we have a full string
+   * to match against.
+   *
+   * @param users the array of `Users` that we're filtering
+   * @param filters the map of key-value pairs used for the filtering
+   * @returns an array of `Users` matching the given filters
+   */
+
+  filterTodos(todos: Todo[], filters: { body?: string}): Todo[] {
+let filteredTodos = todos;
+
+if(filters.body) {
+  filters.body = filters.body.toLowerCase();
+  filteredTodos = filteredTodos.filter(todo => todo.body.toLowerCase().indexOf(filters.body) !== -1);
+
 }
+return filteredTodos;
+  }
+  }
+

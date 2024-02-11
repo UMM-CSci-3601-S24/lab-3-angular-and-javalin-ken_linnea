@@ -95,6 +95,10 @@ describe('TodoListComponent', () => {
     expect(todoList.todos.some((todo: Todo) => todo.owner === 'Pat')).toBe(true);
   })
 
+  it('has two todos with m in their body', ()  => {
+    expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('m')).length).toBe(2);
+  })
+
 });
 
 /*

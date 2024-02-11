@@ -23,6 +23,7 @@ import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
   imports: [MatCard, MatCardTitle, MatCardContent, MatFormField, MatLabel, MatInput, FormsModule, MatHint, MatSelect, MatOption, MatRadioGroup, MatRadioButton, MatNavList, MatListSubheaderCssMatStyler, MatListItem, RouterLink, MatListItemAvatar, MatListItemTitle, MatListItemLine, MatError]
 })
 export class TodoListComponent implements OnInit, OnDestroy {
+  public serverFilteredTodos: Todo[];
   public todos: Todo[];
 
   public todoOwner: string;
@@ -58,7 +59,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
       takeUntil(this.ngUnsubscribe)
     ).subscribe({
       next: (returnedTodos) => {
-        this.todos = returnedTodos;
+        this.serverFilteredTodos = returnedTodos;
+        this.updateFilter();
       },
       error: (err) => {
         if (err.error instanceof ErrorEvent) {
@@ -68,6 +70,12 @@ export class TodoListComponent implements OnInit, OnDestroy {
         }
       },
     })
+  }
+
+  public updateFilter() {
+    this.todos = this.todoService.filterTodos(
+      this.serverFilteredTodos, {body: this.todoBody}
+    )
   }
 
   /**

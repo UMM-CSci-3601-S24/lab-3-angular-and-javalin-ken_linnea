@@ -64,7 +64,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
         this.serverFilteredTodos = returnedTodos;
         this.updateFilter();
         this.serverFilteredTodos = this.todos;
-        this.updateSorting
+        this.updateSorting();
       },
       error: (err) => {
         if (err.error instanceof ErrorEvent) {

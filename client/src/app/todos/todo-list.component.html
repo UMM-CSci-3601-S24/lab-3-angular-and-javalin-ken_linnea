@@ -33,10 +33,11 @@
             <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
 
-        <mat-form-field class="input-field">
-          <mat-label>Limit</mat-label>
-          <input matInput data-test="todoLimitInput" placeholder="Limit todos" [(ngModel)]="todoLimit" type="number" min="1" (input)="updateFilter()"/>
-        </mat-form-field>
+          <mat-form-field class="input-field">
+            <mat-label>Limit</mat-label>
+            <input matInput data-test="todoLimitInput" placeholder="Limit todos" [(ngModel)]="limit" type="number"
+              min="1" (input)="updateFilter()" />
+          </mat-form-field>
 
         </div>
 
@@ -57,8 +58,8 @@
         <div class="flex-row gap-10 flex-wrap">
           <label for="viewType">View type: </label>
           <mat-radio-group aria-label="View type" [(ngModel)]="viewType" data-test="viewTypeRadio">
-            <mat-radio-button value="card">Card</mat-radio-button>
             <mat-radio-button value="list">List</mat-radio-button>
+            <mat-radio-button value="card">Card</mat-radio-button>
           </mat-radio-group>
         </div>
 
@@ -77,8 +78,7 @@
       @case ('card') {
       <div class="todo-cards-container flex-row gap-10 flex-wrap">
         @for (todo of todos; track todo._id) {
-        <app-todo-card class="todo-card" [simple]="true" [todo]="todo"
-          fxFlex="1 1 300px"></app-todo-card>
+        <app-todo-card class="todo-card" [simple]="true" [todo]="todo" fxFlex="1 1 300px"></app-todo-card>
         }
       </div>
       }
@@ -93,12 +93,9 @@
 
               <span matListItemTitle mat-line class="todo-list-owner"> {{todo.owner}} </span>
               <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
-              @if (this.todo.status){
-              <span [style.background-color]="'green'" matListItemLine class="todo-list-status"> {{todo.status}} </span>
-              }
-              @else {
-              <span [style.background-color]="'red'" matListItemLine class="todo-list-status"> {{todo.status}} </span>
-              }
+              <span [style.background-color]="todo.status ? 'green' : 'red'" matListItemLine class="todo-list-status">
+                {{todo.status ? 'Complete' : 'Incomplete'}}
+              </span>
             </a>
             }
           </mat-nav-list>

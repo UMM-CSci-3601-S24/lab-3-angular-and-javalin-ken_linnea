@@ -65,10 +65,10 @@ if (filters.owner) {
   filters.owner = filters.owner.toLowerCase();
   filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
 }
-if (filters.status) {
- filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
+if (filters.status !== undefined) {
+  filteredTodos = filteredTodos.filter(todo => todo.status === filters.status);
 }
 return filteredTodos;
   }
-  }
+}
 

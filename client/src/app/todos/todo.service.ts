@@ -73,7 +73,7 @@ return filteredTodos;
 
 
   sortTodos(todos: Todo[], sortBy?: SortBy) {
-    let sortedTodos = todos;
+    const sortedTodos = todos;
 
     if(sortBy === 'owner') {
       sortedTodos.sort((todo1, todo2) => todo1.owner.localeCompare(todo2.owner))
@@ -84,7 +84,6 @@ return filteredTodos;
     else if(sortBy === 'body'){
       sortedTodos.sort((todo1, todo2) => todo1.body.localeCompare(todo2.body))
     }
-
 
     return sortedTodos;
   }

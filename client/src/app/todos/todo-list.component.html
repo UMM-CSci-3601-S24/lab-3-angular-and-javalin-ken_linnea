@@ -23,6 +23,16 @@
           <mat-hint>Filtered on client</mat-hint>
         </mat-form-field>
 
+        <mat-form-field class="input-field">
+          <mat-label>Status</mat-label>
+          <mat-select (selectionChange)="updateFilter()" [(ngModel)]="todoStatus" data-test="todoStatusSelect">
+            <mat-option>--</mat-option>
+            <mat-option value=true>true</mat-option>
+            <mat-option value=false>false</mat-option>
+          </mat-select>
+          <mat-hint>Filtered on client</mat-hint>
+        </mat-form-field>
+
         </div>
 
         <div class="flex-row gap-10 flex-wrap">
@@ -75,6 +85,7 @@
                       }
                       <span matListItemTitle mat-line class="todo-list-name"> {{todo.owner}} </span>
                       <span matListItemLine class="todo-list-role"> {{todo.category}} </span>
+                      <span matListItemLine class="todo-list-role"> {{todo.status}} </span>
                     </a>
                   }
                 </mat-nav-list>

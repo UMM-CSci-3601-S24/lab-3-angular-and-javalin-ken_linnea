@@ -6,3 +6,5 @@ export interface Todo {
   category: string;
   avatar?: string;
 }
+
+export type SortBy = 'owner' | 'category' | 'body';

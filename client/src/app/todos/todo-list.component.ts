@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Todo } from './todo';
+import { SortBy, Todo } from './todo';
 import { TodoService } from './todo.service';
 import { Subject, takeUntil } from 'rxjs';
 import { RouterLink } from '@angular/router';
@@ -32,6 +32,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   public todoCategory: string;
   public todoBody: string;
   public viewType: 'list' | 'card' = 'list';
+  public todoSortBy: SortBy;
   public limit: number = 25;
 
   errMsg = '';
@@ -63,6 +64,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
       next: (returnedTodos) => {
         this.serverFilteredTodos = returnedTodos;
         this.updateFilter();
+        this.serverFilteredTodos = this.todos;
+        this.updateSorting();
       },
       error: (err) => {
         if (err.error instanceof ErrorEvent) {
@@ -78,6 +81,10 @@ export class TodoListComponent implements OnInit, OnDestroy {
     this.todos = this.todoService.filterTodos(
       this.serverFilteredTodos, { body: this.todoBody, owner: this.todoOwner, status: this.todoStatus, limit: this.limit }
     )
+  }
+
+  public updateSorting() {
+    this.todos = this.todoService.sortTodos(this.serverFilteredTodos, this.todoSortBy)
   }
 
   /**

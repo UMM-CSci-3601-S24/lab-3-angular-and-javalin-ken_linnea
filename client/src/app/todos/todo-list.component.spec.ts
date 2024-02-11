@@ -102,6 +102,14 @@ describe('TodoListComponent', () => {
   it('has two one todo with ch in its body', ()  => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.owner.toLowerCase().includes('ch')).length).toBe(1);
   })
+
+  it('has two todos with true status', ()  => {
+    expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.status === true).length).toBe(2);
+  })
+
+  it('has two todos with false status', ()  => {
+    expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.status === false).length).toBe(1);
+  })
 });
 
 /*

@@ -53,12 +53,12 @@ describe('TodoListComponent', () => {
   // can find all the necessary parts.
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [COMMON_IMPORTS, TodoListComponent, TodoCardComponent],
-    // providers:    [ TodoService ]  // NO! Don't provide the real service!
-    // Provide a test-double instead
-    // This MockerTodoService is defined in client/testing/todo.service.mock.
-    providers: [{ provide: TodoService, useValue: new MockTodoService() }]
-});
+      imports: [COMMON_IMPORTS, TodoListComponent, TodoCardComponent],
+      // providers:    [ TodoService ]  // NO! Don't provide the real service!
+      // Provide a test-double instead
+      // This MockerTodoService is defined in client/testing/todo.service.mock.
+      providers: [{ provide: TodoService, useValue: new MockTodoService() }]
+    });
   });
 
   // This constructs the `todoList` (declared
@@ -95,20 +95,38 @@ describe('TodoListComponent', () => {
     expect(todoList.todos.some((todo: Todo) => todo.owner === 'Pat')).toBe(true);
   })
 
-  it('has two todos with m in their body', ()  => {
+  it('has two todos with m in their body', () => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.body.toLowerCase().includes('m')).length).toBe(2);
   })
 
-  it('has two one todo with ch in its body', ()  => {
+  it('has two one todo with ch in its body', () => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.owner.toLowerCase().includes('ch')).length).toBe(1);
   })
 
-  it('has two todos with true status', ()  => {
+  it('has two todos with true status', () => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.status === true).length).toBe(2);
   })
 
-  it('has two todos with false status', ()  => {
+  it('has two todos with false status', () => {
     expect(todoList.serverFilteredTodos.filter((todo: Todo) => todo.status === false).length).toBe(1);
+  })
+
+  it('tests that all todos are returned when limit is undefined', () => {
+    todoList.limit = undefined;
+    todoList.updateFilter();
+    expect(todoList.todos.length).toBe(3);
+  })
+
+  it('limits the todos to 2 when limit is set', () => {
+    todoList.limit = 2;
+    todoList.updateFilter();
+    expect(todoList.todos.length).toBe(2);
+  })
+
+  it('limits the todos to 1 when limit is set', () => {
+    todoList.limit = 1;
+    todoList.updateFilter();
+    expect(todoList.todos.length).toBe(1);
   })
 });
 
@@ -139,11 +157,11 @@ describe('Misbehaving Todo List', () => {
     };
 
     TestBed.configureTestingModule({
-    imports: [COMMON_IMPORTS, TodoListComponent],
-    // providers:    [ TodoService ]  // NO! Don't provide the real service!
-    // Provide a test-double instead
-    providers: [{ provide: TodoService, useValue: todoServiceStub }]
-});
+      imports: [COMMON_IMPORTS, TodoListComponent],
+      // providers:    [ TodoService ]  // NO! Don't provide the real service!
+      // Provide a test-double instead
+      providers: [{ provide: TodoService, useValue: todoServiceStub }]
+    });
   });
 
   // Construct the `todoList` used for the testing in the `it` statement

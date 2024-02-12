@@ -33,7 +33,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   public todoBody: string;
   public viewType: 'list' | 'card' = 'list';
   public todoSortBy: SortBy;
-  public limit: number = 25;
+  public limit: number;
 
   errMsg = '';
   private ngUnsubscribe = new Subject<void>();

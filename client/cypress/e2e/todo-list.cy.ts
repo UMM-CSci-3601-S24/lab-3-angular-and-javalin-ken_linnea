@@ -49,13 +49,14 @@ describe('Todo list',() => {
 
  it('Should type a name in the owner filter and check that it returned correct elements', () => {
     // Filter for owner 'Blanche'
+    page.changeView('card');
     cy.get('[data-test=todoOwnerInput]').type('Blanche');
 
     page.getTodoCards().should('have.lengthOf', 43);
 
     // All of the todo cards should have the owner we are filtering by
     page.getTodoCards().find('.todo-card-owner').each($card => {
-      cy.wrap($card).should('have.text', 'Blanche');
+      cy.wrap($card).should('have.text','Blanche');
     })
 
     page.getTodoCards().find('.todo-card-owner')
@@ -66,11 +67,12 @@ describe('Todo list',() => {
 
   it('Should type something in the body filter and check that it returned correct elements', () => {
     // Filter for body 'Amet do velit tempor'
+    page.changeView('card');
     cy.get('[data-test=todoBodyInput]').type('Amet do velit tempor');
 
     page.getTodoCards().should('have.lengthOf', 1);
     page.getTodoCards().find('.todo-card-owner').each($card => {
-      cy.wrap($card).should('have.text', 'Blanche');
+      cy.wrap($card).should('have.text','Blanche');
     })
 
   });

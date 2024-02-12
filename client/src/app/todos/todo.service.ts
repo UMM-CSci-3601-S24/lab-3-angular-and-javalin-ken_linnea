@@ -84,6 +84,9 @@ return filteredTodos;
     else if(sortBy === 'body'){
       sortedTodos.sort((todo1, todo2) => todo1.body.localeCompare(todo2.body))
     }
+    else if(sortBy === 'status'){
+      sortedTodos.sort((todo1, todo2) => todo1.status.toString().localeCompare(todo2.status.toString()))
+    }
 
     return sortedTodos;
   }

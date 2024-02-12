@@ -4,6 +4,8 @@ import { TestBed } from '@angular/core/testing';
 import { Todo, SortBy } from './todo'
 import { TodoService } from './todo.service';
 
+
+
 describe('TodoService', () => {
   // A small collection of test todos
   const testTodos: Todo[] = [
@@ -120,4 +122,45 @@ describe('testing sortTodos with different SortBy values', () => {
     expect(sortedTodos[2].body).toBe('UMM');
   })
 })
-})
+
+describe('getTodoById()', () => {
+  it('calls api/todos/id with the correct URL', () => {
+    const targetTodo: Todo = testTodos[1];
+    const targetId: string = targetTodo._id;
+    todoService.getTodoById(targetId).subscribe(
+      todo => expect(todo).toBe(targetTodo)
+    );
+    const expectedUrl: string = todoService.todoUrl + '/' + targetId;
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(targetTodo);
+  });
+});
+
+describe('filterTodos()', () => {
+  it('filters by body', () => {
+    const todoBody = 'UMM';
+    const filteredTodos = todoService.filterTodos(testTodos, { body: todoBody});
+    expect(filteredTodos.length).toBe(1);
+    filteredTodos.forEach(todo => {
+      expect(todo.body.indexOf(todoBody)).toBeGreaterThanOrEqual(0);
+    });
+  });
+  it('filters by owner', () => {
+    const todoOwner = 'Chris';
+    const filteredTodos = todoService.filterTodos(testTodos, { owner: todoOwner });
+    expect(filteredTodos.length).toBe(1);
+    filteredTodos.forEach(todo => {
+      expect(todo.owner).toBe(todoOwner);
+    });
+});
+});
+it('filters by status', () => {
+  const todoStatus = true;
+  const filteredTodos = todoService.filterTodos(testTodos, { status: todoStatus });
+  expect(filteredTodos.length).toBe(2);
+  filteredTodos.forEach(todo => {
+    expect(todo.status).toBe(todoStatus);
+  });
+});
+});

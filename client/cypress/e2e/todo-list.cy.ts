@@ -33,7 +33,7 @@ describe('Todo list',() => {
     page.getTodoListItems().should('exist');
   });
 
-  it('Should type something in the category filter and check that it returned correct elements', () => {
+  it('Should select something in the category filter and check that it returned correct elements', () => {
     // Filter for category 'software design'
     page.changeView('card');
     page.selectCategory('software design');
@@ -74,8 +74,38 @@ describe('Todo list',() => {
     page.getTodoCards().find('.todo-card-owner').each($card => {
       cy.wrap($card).should('have.text','Blanche');
     })
-
   });
 
+  it('Should select a status and check that it returned correct elements', () => {
+    // Change to list view
+    page.changeView('list');
 
+    // Filter for status 'Complete'
+    page.selectStatus('Complete');
+
+    // Add your assertions here. For example, check if all returned todos have the status 'Complete'
+    page.getTodoListItems().find('.todo-list-status')
+      .should('contain.text', 'Complete');
+  });
+
+  it('Should type a number in the limit filter and check that it returned correct elements', () => {
+    // Filter for limit '5'
+    page
+    cy.get('[data-test=todoLimitInput]').type('5');
+
+    page.getTodoListItems().should('have.lengthOf', 5);
+  });
+
+  it('Should select a category to Sort By and check that it returned correct elements', () => {
+    page.changeView('list');
+    page.selectSort('category');
+    cy.get('[data-test=todoLimitInput]').type('20');
+    page.getTodoListItems().find('.todo-list-category')
+      .should('contain.text', 'groceries')
+      .should('not.contain.text', 'homework')
+      .should('not.contain.text', 'video games')
+      .should('not.contain.text', 'software design');
 });
+});
+
+

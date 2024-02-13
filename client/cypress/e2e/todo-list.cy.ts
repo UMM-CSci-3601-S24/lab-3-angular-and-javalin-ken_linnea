@@ -90,7 +90,7 @@ describe('Todo list',() => {
 
   it('Should type a number in the limit filter and check that it returned correct elements', () => {
     // Filter for limit '5'
-    page
+    page.changeView('list');
     cy.get('[data-test=todoLimitInput]').type('5');
 
     page.getTodoListItems().should('have.lengthOf', 5);

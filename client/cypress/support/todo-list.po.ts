@@ -44,4 +44,9 @@ export class TodoListPage {
   selectStatus(status: true | false) {
     return cy.get(`[data-test=todoStatusSelect] mat-option[value]='${status}']`).click();
   }
+
+  selectCategory(category: string) {
+    return cy.get('[data-test=todoCategorySelect]').click()
+      .get(`mat-option[value="${category}"]`).click();
+  }
 }

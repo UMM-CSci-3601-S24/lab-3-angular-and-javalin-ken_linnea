@@ -36,7 +36,7 @@ describe('Todo list',() => {
   it('Should type something in the category filter and check that it returned correct elements', () => {
     // Filter for category 'software design'
     page.changeView('card');
-    cy.get('[data-test=todoCategoryInput]').type('software design');
+    page.selectCategory('software design');
 
     page.getTodoCards().should('have.lengthOf', 74);
 

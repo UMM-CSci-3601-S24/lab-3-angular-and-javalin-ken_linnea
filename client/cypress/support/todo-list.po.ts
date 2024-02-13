@@ -1,11 +1,3 @@
-/*
-"_id": "58895985a22c04e761776d54",
-"owner": "Blanche",
-"status": false,
-"body": "In sunt ex non tempor cillum commodo amet incididunt anim qui commodo quis. Cillum non labore ex sint esse.",
-"category": "software design"
- */
-
 export class TodoListPage {
   navigateTo() {
     return cy.visit('/todos');
@@ -41,7 +33,18 @@ export class TodoListPage {
     return cy.get('.todo-nav-list .todo-list-item');
   }
 
-  selectStatus(status: true | false) {
-    return cy.get(`[data-test=todoStatusSelect] mat-option[value]='${status}']`).click();
+  selectStatus(status: 'Complete' | 'Incomplete' | '--') {
+    return cy.get('[data-test=todoStatusSelect]').click()
+      .get(`mat-option:contains("${status}")`).click();
+  }
+
+  selectCategory(category: string) {
+    return cy.get('[data-test=todoCategorySelect]').click()
+      .get(`mat-option[value="${category}"]`).click();
+  }
+
+  selectSort(sortBy: 'owner' | 'category' | 'body' | 'status') {
+    return cy.get('[data-test=todoSorterSelect]').click()
+      .get(`mat-option[value="${sortBy}"]`).click();
   }
 }

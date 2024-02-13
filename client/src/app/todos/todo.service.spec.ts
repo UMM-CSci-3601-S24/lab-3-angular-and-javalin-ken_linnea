@@ -168,8 +168,16 @@ describe('testing sortTodos with different SortBy values', () => {
     expect(sortedTodos[0].body).toBe('Frogs, Inc.')
     expect(sortedTodos[1].body).toBe('IBM');
     expect(sortedTodos[2].body).toBe('UMM');
-  });
-});
+  })
+
+  it('sorts by status', () => {
+    sorter = 'status'
+    sortedTodos = todoService.sortTodos(testTodos, sorter)
+    expect(sortedTodos[0].status).toBe(false)
+    expect(sortedTodos[1].status).toBe(true);
+    expect(sortedTodos[2].status).toBe(true);
+  })
+})
 
 describe('getTodoById()', () => {
   it('calls api/todos/id with the correct URL', () => {

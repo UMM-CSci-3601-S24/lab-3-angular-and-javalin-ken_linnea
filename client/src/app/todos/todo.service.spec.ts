@@ -42,6 +42,7 @@ describe('TodoService', () => {
   let httpTestingController: HttpTestingController;
   let sorter: SortBy;
   let sortedTodos: Todo[];
+  let filteredTodos: Todo[];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -94,8 +95,55 @@ describe('TodoService', () => {
 
         req.flush(testTodos);
     });
-  })
-})
+  });
+});
+
+describe('testing filterTodos with differnt filters and filter combinations', () => {
+ it('filters by body', () => {
+  filteredTodos = todoService.filterTodos(testTodos, {body: 'i'})
+  expect(filteredTodos.length).toBe(2)
+ });
+ it('filters by owner', () => {
+  filteredTodos = todoService.filterTodos(testTodos, {owner: 'a'})
+  expect(filteredTodos.length).toBe(2)
+ });
+ it('filters by status and owner', () => {
+  filteredTodos = todoService.filterTodos(testTodos, {owner: 'a', status: true})
+  expect(filteredTodos.length).toBe(1)
+ });
+  it('filters by body and limits', () => {
+    filteredTodos = todoService.filterTodos(testTodos, {body: 'i', limit: 1})
+    expect(filteredTodos.length).toBe(1)
+ });
+});
+
+describe('calling getTodos() correctly forms the http request', () => {
+  it('calls `api/todos` when `getTodos()` is called with no parameters', () => {
+    todoService.getTodos().subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+    const req = httpTestingController.expectOne(todoService.todoUrl);
+    expect(req.request.method).toEqual('GET');
+    // Check that the request had no query parameters.
+    expect(req.request.params.keys().length).toBe(0);
+    req.flush(testTodos);
+  });
+
+  it('correctly calls api/todos with filter parameter \'category\'', () => {
+    todoService.getTodos({category: 'homework'}).subscribe(
+      todos => expect(todos).toBe(testTodos)
+    );
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('category')
+    );
+    expect(req.request.method).toEqual('GET');
+
+        // Check that the role parameter was 'admin'
+    expect(req.request.params.get('category')).toEqual('homework');
+
+    req.flush(testTodos);
+  });
+});
 
 describe('testing sortTodos with different SortBy values', () => {
   it('sorts by owner', () => {
@@ -104,7 +152,7 @@ describe('testing sortTodos with different SortBy values', () => {
     expect(sortedTodos[0].owner).toBe('Chris')
     expect(sortedTodos[1].owner).toBe('Jamie');
     expect(sortedTodos[2].owner).toBe('Pat');
-  })
+  });
 
   it('sorts by category', () => {
     sorter = 'category'
@@ -112,7 +160,7 @@ describe('testing sortTodos with different SortBy values', () => {
     expect(sortedTodos[0].category).toBe('homework')
     expect(sortedTodos[1].category).toBe('software design');
     expect(sortedTodos[2].category).toBe('video games');
-  })
+  });
 
   it('sorts by body', () => {
     sorter = 'body'

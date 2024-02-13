@@ -104,12 +104,14 @@
             @for (todo of this.todos; track todo._id) {
             <a mat-list-item [routerLink]="['/todos', todo._id]" class="todo-list-item">
 
-              <span matListItemTitle mat-line class="todo-list-owner"> {{todo.owner}} </span>
-              <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
-              <span [style.background-color]="todo.status ? 'green' : 'red'" matListItemLine class="todo-list-status">
-                {{todo.status ? 'Complete' : 'Incomplete'}}
-              </span>
-            </a>
+                <span matListItemTitle mat-line class="todo-list-owner"> {{todo.owner}} </span>
+                <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
+                <span matListItemLine class="todo-list-status">
+                  <span [style.background-color]="todo.status ? 'green' : 'red'">
+                    {{todo.status ? 'Complete' : 'Incomplete'}}
+                  </span>
+                </span>
+              </a>
             }
           </mat-nav-list>
         </mat-card-content>
